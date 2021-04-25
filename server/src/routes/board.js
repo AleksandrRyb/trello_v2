@@ -9,13 +9,16 @@ function getBoardRoutes() {
 
   router.get("/", protect, getBoards);
   router.get("/:boardId", protect, getBoard);
+  router.get("/:boardId/lists", protect, getLists);
+  router.get("/:boardId/cards", protect, getCards);
+
   router.post("/", protect, addBoard);
   router.delete("/:boardId", protect, deleteBoard);
   router.put("/:boardId", protect, updateBoard);
 
   return router;
 }
-
+//GET BOARDS
 async function getBoards(req, res, next) {
   try {
     const boards = await Board.find({ userId: req.userId });
@@ -25,7 +28,7 @@ async function getBoards(req, res, next) {
     res.status(200).json({ message: "Can't find boards" });
   }
 }
-
+//GET BOARD
 async function getBoard(req, res, next) {
   const _id = req.params.boardId;
   try {
@@ -39,6 +42,44 @@ async function getBoard(req, res, next) {
   }
 }
 
+//GET LISTS BASED ON BOARD ID
+async function getLists(req, res, next) {
+  const { boardId } = req.params;
+  try {
+    const board = await Board.findById(boardId);
+    if (!board) {
+      return res
+        .status(404)
+        .json({ message: "Board mistake, can not find board with existed id" });
+    }
+
+    const lists = await List.find({ boardId });
+
+    res.status(200).json(lists);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getCards(req, res, next) {
+  const { boardId } = req.params;
+  try {
+    const board = await Board.findById(boardId);
+    if (!board) {
+      return res
+        .status(404)
+        .json({ message: "Board mistake, can not find board with existed id" });
+    }
+
+    const cards = await Card.find({ boardId });
+
+    res.status(200).json(cards);
+  } catch (error) {
+    next(error);
+  }
+}
+
+//ADD BOARDS
 async function addBoard(req, res, next) {
   if (!req.body) {
     return res.status(400).json({ message: "Empty fields not allowed!" });
@@ -88,6 +129,7 @@ async function updateBoard(req, res) {
   }
 }
 
+//DELETE BOARD
 async function deleteBoard(req, res) {
   try {
     let board = await Board.findById(req.params.boardId);
