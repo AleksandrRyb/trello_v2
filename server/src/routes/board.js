@@ -93,12 +93,12 @@ async function addBoard(req, res, next) {
 
     res.status(200).json({ newBoard });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong!" });
+    next(error);
   }
 }
 
 //UPDATE BOARD CONTENT BASED ON ID
-async function updateBoard(req, res) {
+async function updateBoard(req, res, next) {
   const _id = req.params.boardId;
   //Create array based on body keys
   const updates = Object.keys(req.body);
@@ -125,7 +125,7 @@ async function updateBoard(req, res) {
 
     res.status(200).json(board);
   } catch (error) {
-    res.status(400).json(error);
+    next(error);
   }
 }
 

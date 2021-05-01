@@ -4,7 +4,9 @@
   "description": "trello clone using react, redux, node and mongodb",
   "main": "index.js",
   "scripts": {
-    "dev:server": "nodemon --delay 500ms server"
+    "dev:server": "nodemon --delay 500ms server",
+    "dev:client": "cd client && npm start",
+    "start": "concurrently \"npm run dev:server\" \"npm run dev:client\" "
   },
   "engines": {
     "node": "14.16.0"
