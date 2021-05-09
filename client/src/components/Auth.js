@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles, Paper } from "@material-ui/core";
 
 import Header from "./Header";
+import Notice from "./Notice";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -62,6 +63,10 @@ function Auth({
   passwordChangeHandler,
   passwordCheck,
   passwordCheckChangeHandler,
+  submitHandler,
+  error,
+  success,
+  clearError,
 }) {
   const classes = useStyles();
 
@@ -69,6 +74,9 @@ function Auth({
     <div>
       <Header btnText={btnText} path={path} icon={icon} />
       <div className={classes.wrapper}>
+        {error && (
+          <Notice error={error} success={success} clearError={clearError} />
+        )}
         <Paper elevation={1} className={classes.form}>
           <div
             style={{
@@ -82,7 +90,7 @@ function Auth({
           >
             {authName} to Trellis
           </div>
-          <form>
+          <form onSubmit={submitHandler}>
             <label htmlFor={`${authName}-username`}></label>
             <input
               className={classes.input}

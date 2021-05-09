@@ -23,7 +23,7 @@ async function register(req, res, next) {
     if (!password && !passwordCheck && !username) {
       return res
         .status(400)
-        .json({ message: "Empty fields do not requried, enter everything" });
+        .json({ message: "Empty fields do not allowed, fill the fields!" });
     }
 
     if (password.length < 5) {
@@ -51,12 +51,11 @@ async function register(req, res, next) {
     //Save new User with credentials and hashed password
     const newUser = await new User({ username, password: passwordHash }).save();
 
-    res.status(200).json({ username: newUser.username, _id: newUser._id });
+    res
+      .status(200)
+      .json({ user: { username: newUser.username, id: newUser._id } });
   } catch {
-    if (error.name === "ValidationError") {
-      return res.status(422).json({});
-    }
-    next(error);
+    res.status(422).json({ message: "Register related error, try later!" });
   }
 }
 
@@ -92,12 +91,12 @@ async function login(req, res, next) {
     });
 
     const user = {
-      _id: existedUser._id,
+      id: existedUser._id,
       username: existedUser.username,
     };
     res.status(200).json({ token, user });
   } catch (error) {
-    next(error);
+    res.status(422).json({ message: "Login related error, try later!" });
   }
 }
 

@@ -1,0 +1,9 @@
+{
+  "prettier.default-config.jsxSingleQuote" : "Global Default",
+  "prettier.default-config.semi" : "Global Default",
+  "prettier.default-config.singleQuote" : "Global Default",
+  "prettier.default-config.useTabs" : "Global Default",
+  "prettier.format-on-save" : "Enable",
+  "prettier.format-on-save.ignore-remote" : "Enable",
+  "prettier.format-on-save.ignore-without-config" : "Enable"
+}
