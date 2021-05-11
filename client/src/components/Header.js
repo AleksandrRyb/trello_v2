@@ -1,7 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 
+import { logOut } from "../redux/actions/userActions";
 import AddItem from "./AddItem";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,12 +54,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Header({ loggedIn = false, path, btnText, icon }) {
+function Header({ loggedIn, path, btnText, icon }) {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
   const handleClick = () => {
     history.push(`${path}`);
+  };
+
+  const handleOut = () => {
+    dispatch(logOut());
+    localStorage.setItem("auth-token", "");
+    history.push("/");
   };
 
   return (
@@ -68,7 +79,7 @@ function Header({ loggedIn = false, path, btnText, icon }) {
 
         {loggedIn ? (
           <div style={{ display: "flex", margin: "10px" }}>
-            <div className={classes.username}></div>
+            <div className={classes.username}>{user.username}</div>
             <div
               style={{
                 position: "fixed",
@@ -81,7 +92,8 @@ function Header({ loggedIn = false, path, btnText, icon }) {
               <AddItem
                 btnText="Logout"
                 type="menu"
-                // icon={<ExitToAppIcon fontSize="small" />}
+                icon={<ExitToAppIcon fontSize="small" />}
+                handleClick={handleOut}
                 width="85px"
                 color="white"
               />

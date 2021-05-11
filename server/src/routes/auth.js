@@ -131,7 +131,7 @@ async function me(req, res, next) {
     }
 
     const user = {
-      _id: existedUser._id,
+      id: existedUser._id,
       username: existedUser.username,
     };
 

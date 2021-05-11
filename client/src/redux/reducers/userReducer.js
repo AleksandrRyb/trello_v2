@@ -11,6 +11,8 @@ const initialState = {
   loginRequest: true,
   loginSuccess: false,
   isValid: false,
+  userRequest: true,
+  tokenRequest: true,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -52,7 +54,36 @@ export const userReducer = (state = initialState, action) => {
         loginRequest: false,
         loginError: action.payload.error,
       };
+    case ACTIONS.TOKEN_REQUEST:
+      return {
+        ...state,
+        tokenRequest: true,
+      };
+    case ACTIONS.TOKEN_SUCCESS:
+      return {
+        ...state,
+        isValid: action.payload.isTokenValid,
+        token: action.payload.token,
+        tokenRequest: false,
+      };
+    case ACTIONS.TOKEN_FAILED:
+      return {
+        ...state,
+        tokenError: action.payload.error,
+      };
+    case ACTIONS.USER_REQUEST:
+      return {
+        ...state,
+        userRequest: true,
+      };
+    case ACTIONS.USER_SUCCESS:
+      return {
+        ...state,
+        userRequest: false,
+        user: action.payload.user.user,
+        token: action.payload.token,
+      };
     default:
       return state;
   }
-}
+};

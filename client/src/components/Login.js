@@ -22,8 +22,8 @@ function Login() {
   });
 
   React.useEffect(() => {
-    if (user.username !== undefined) {
-      history.push(`/${username}/boards`);
+    if (user.username) {
+      history.push(`/${user.username}/boards`);
     }
   }, [user, history]);
 
