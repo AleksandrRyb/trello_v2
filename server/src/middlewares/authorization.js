@@ -9,7 +9,7 @@ async function protect(req, res, next) {
         .json({ message: "You need to be logged in to visit this page" });
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+    console.log(decoded);
     if (!decoded) {
       return res
         .status(401)

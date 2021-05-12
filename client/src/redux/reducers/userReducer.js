@@ -46,6 +46,7 @@ export const userReducer = (state = initialState, action) => {
         loginSuccess: true,
         user: action.payload.user,
         token: action.payload.token,
+        isValid: true,
       };
     case ACTIONS.LOGIN_FAILED:
       return {
@@ -80,7 +81,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         userRequest: false,
-        user: action.payload.user.user,
+        user: action.payload.user,
         token: action.payload.token,
       };
     default:

@@ -21,12 +21,14 @@ function Login() {
     document.title = "Treillis | Login";
   });
 
+  //If user exists in user reducer, push to boards page
   React.useEffect(() => {
-    if (user.username) {
+    if (user.username !== undefined) {
       history.push(`/${user.username}/boards`);
     }
   }, [user, history]);
 
+  //Look at changing of or login reducer and token, if get success data set token
   React.useEffect(() => {
     if (!loginRequest) {
       if (token && loginSuccess) {

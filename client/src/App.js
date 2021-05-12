@@ -11,21 +11,22 @@ function App() {
   const { isValid, userRequest, token } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  //Check if token valid to get user info
+  //If token exists and got success from tokenValidation, get user info
+  //Render only when isValid or token are changed
   React.useEffect(() => {
     if (isValid) {
       dispatch(getUserInfo(token));
     }
   }, [isValid, token, dispatch]);
 
-  //Check for token is valid every dispatch or token change
+  //Every render of app check for token is valid
+  //Get token not from reducer but from local storage
   React.useEffect(() => {
     let token = localStorage.getItem("auth-token");
     if (!token) {
       localStorage.setItem("auth-token", "");
       token = "";
     }
-
     dispatch(validateToken(token));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

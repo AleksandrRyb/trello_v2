@@ -39,7 +39,7 @@ export const validateToken = (token) => async (dispatch) => {
   dispatch({ type: ACTIONS.TOKEN_REQUEST });
   try {
     const response = await axios.post(`${BASE_URL}/token-is-valid`, null, {
-      headers: { "a-auth-token": token },
+      headers: { "x-auth-token": token },
     });
 
     dispatch({
@@ -57,8 +57,8 @@ export const validateToken = (token) => async (dispatch) => {
 export const getUserInfo = (token) => async (dispatch) => {
   dispatch({ type: ACTIONS.USER_REQUEST });
   try {
-    const response = await axios.post(`${BASE_URL}`, null, {
-      headers: { "a-auth-token": token },
+    const response = await axios.get(`${BASE_URL}`, {
+      headers: { "x-auth-token": token },
     });
 
     dispatch({

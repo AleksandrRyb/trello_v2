@@ -82,7 +82,7 @@ function Header({ loggedIn, path, btnText, icon }) {
             <div className={classes.username}>{user.username}</div>
             <div
               style={{
-                position: "fixed",
+                // position: "fixed",
                 marginTop: "-5px",
                 right: 0,
                 marginLeft: "10px",

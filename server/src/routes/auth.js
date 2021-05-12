@@ -119,7 +119,9 @@ async function validateToken(req, res, next) {
     }
 
     res.status(200).json(true);
-  } catch (error) {}
+  } catch (error) {
+    res.status(200).json(false);
+  }
 }
 
 async function me(req, res, next) {
@@ -137,7 +139,7 @@ async function me(req, res, next) {
 
     res.status(200).json(user);
   } catch (error) {
-    res.status(401).json({});
+    res.status(404).json({});
   }
 }
 

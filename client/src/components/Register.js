@@ -20,10 +20,15 @@ function Register() {
   });
 
   React.useEffect(() => {
+    //Look for register reducer is changed
+    //If register was successfull change location to "/" route
     if (!registerRequest && registerSuccess) {
       setError("Successfully Registered ✔");
+      //Set auth token as empty string,
       localStorage.setItem("auth-token", "");
+      //Why not history push, i think we need reload a page for change reducer to first look
       window.location.href = "/";
+      //Success state for change color of notification
       setSuccess(true);
     } else if (!registerRequest && !registerSuccess) {
       setError(registerError);
